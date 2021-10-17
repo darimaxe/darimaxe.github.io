@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Fantasy Hockey App</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+
+    </head>
+
+    <body>
+
+        <div style="float: left; background-color: #99d9d9; height: 100vh; position: absolute; top:0; left:0; width: 20%; padding: 1%">
+            <form action="{{ url_for('addPlayer') }}", method="POST">
+                <div class="form-group" style = "padding-bottom: 10px">
+                    <input type="text" class="form-control" name="playerName" placeholder="Player Name">
+                </div>
+                <button type="submit" class="btn" style = "color: white; background-color: #355464">Add Player</button>
+            </form>
+
+            <form action="{{ url_for('updateTeamName') }}", method="POST">
+                <div class="form-group" style = "padding-top: 30px; padding-bottom: 10px">
+                    <input type="text" class="form-control" name="teamName" placeholder="Team Name">
+                </div>
+                <button type="submit" class="btn" style = "color: white; background-color: #001628">Update Fantasy Team Name</button>
+            </form>            
+        </div>       
+
+    <div style="float: left; width: 80%; height: 100vh; position: absolute; top: 0; left: 20%; padding-top: 1%; padding-left: 1%; padding-right: 1%">
+        <main role="main" class="container extra-bottom">
+        <h1>Fantasy Hockey App</h1>
+        </main>
+
+    <div class="container table-responsive">          
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="playerNumber">#</th>
+            <th class="player">Player</th>
+            <th class="position">Position</th>
+            <th class="fanTeam">Fantasy Team Name</th>
+            <th class="playerTeam">Player Team Name</th>
+            <th class="goals">Goals</th>
+            <th class="assists">Assists</th>
+            <th class="points">Points</th>
+            <th class="remove">Remove</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for player in players %}
+            <tr>
+                <td>{{player.number}}</td>
+                <td>{{player.name}}</td>
+                <td>{{player.position}}</td>
+                <td>{{player.fantasyTeamName}}</td>
+                <td>{{player.team}}</td>
+                <td>{{player.goals}}</td>
+                <td>{{player.assists}}</td>
+                <td>{{player.points}}</td>
+
+                <td><form action="{{ url_for('deletePlayer') }}", method="POST">
+                    <button type="submit" class="btn" name="deletePlayer" value = {{player._id}} style="background-color: #e9072b; color: white">Delete</button>
+                </form></td>
+            </tr>
+        {% endfor %}
+       
+        </tbody>
+    </table>
+    </div>
+</div>
+  </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+
+</html>
